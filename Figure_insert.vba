@@ -8,7 +8,7 @@
 ' 兼容性: MacOS
 ' ===================================================================
 
-Sub GenerateFramesForMac_Final()
+Sub GenerateFramesAfterTemplate()
     Dim folderPath As String
     Dim fileName As String
     Dim pptSlide As Slide
@@ -16,31 +16,51 @@ Sub GenerateFramesForMac_Final()
     Dim templateSlide As Slide
     Dim newImg As Shape
     Dim sldRange As SlideRange
+    Dim foundTemplate As Boolean
+    Dim insertIndex As Integer
     
     ' --- 路径设置 ---
-    ' 提示：确保路径以 / 结尾，且用户名正确
     folderPath = "/Users/wangzilong/Downloads/intersection/"
     
+    ' --- 1. 定位模板及其位置 ---
+    foundTemplate = False
+    For Each pptSlide In ActivePresentation.Slides
+        For Each targetShape In pptSlide.Shapes
+            If targetShape.Name = "TargetImage" Then
+                Set templateSlide = pptSlide
+                ' 记录模板的当前索引
+                insertIndex = pptSlide.SlideIndex
+                foundTemplate = True
+                Exit For
+            End If
+        Next targetShape
+        If foundTemplate Then Exit For
+    Next pptSlide
+    
+    If Not foundTemplate Then
+        MsgBox "未找到名为 'TargetImage' 的模板占位符。", vbCritical
+        Exit Sub
+    End If
+
+    ' --- 2. 遍历并按顺序插入 ---
     fileName = Dir(folderPath & "frame_*.png")
     
     If fileName = "" Then
-        MsgBox "未找到图片，请检查路径和文件名。"
+        MsgBox "未找到图片，请检查路径。"
         Exit Sub
     End If
-    
-    ' 设置第一页为模板
-    Set templateSlide = ActivePresentation.Slides(1)
-    
     
     Do While fileName <> ""
         templateSlide.Copy
         
-        ' --- 核心修正点 ---
-        ' Paste 返回 SlideRange，我们通过 (1) 提取其中的 Slide 对象
-        Set sldRange = ActivePresentation.Slides.Paste(ActivePresentation.Slides.Count + 1)
+        ' --- 在 insertIndex + 1 的位置粘贴 ---
+        Set sldRange = ActivePresentation.Slides.Paste(insertIndex + 1)
         Set pptSlide = sldRange(1)
         
-        ' 寻找并替换图片
+        ' 更新插入位置索引，保证序列按 frame_1, frame_2 排序
+        insertIndex = pptSlide.SlideIndex
+        
+        ' 替换图片
         For Each targetShape In pptSlide.Shapes
             If targetShape.Name = "TargetImage" Then
                 Set newImg = pptSlide.Shapes.AddPicture(folderPath & fileName, _
@@ -56,6 +76,6 @@ Sub GenerateFramesForMac_Final()
         fileName = Dir()
     Loop
     
-    MsgBox "所有数据帧已成功导入！"
+    MsgBox "处理完成！新幻灯片已插入到原模板页之后。"
 End Sub
 
