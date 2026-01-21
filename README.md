@@ -71,3 +71,9 @@ A collection of VBA macros for **Microsoft PowerPoint on MacOS**, designed for r
 5. 运行 `RunAllFunctions` 主宏。
 6. 脚本将自动生成顶部导航栏、底部进度条及标准页码。
 
+<!-- 致谢项目：BUAA PPT https://github.com/ZhouKanglei/BUAA-PPT -->
+---
+## Acknowledgements / 致谢
+This project is inspired by the [**BUAA PPT**](https://github.com/ZhouKanglei/BUAA-PPT) project by [Zhou Kanglei](https://github.com/ZhouKanglei).
+
+本项目的灵感来源于 [**BUAA PPT**](https://github.com/ZhouKanglei/BUAA-PPT) 项目，由 [Zhou Kanglei](https://github.com/ZhouKanglei) 开发。
