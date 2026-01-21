@@ -1,8 +1,8 @@
 # Beamer Style MS-PPT-VBA
 
-A collection of VBA macros for **Microsoft PowerPoint on MacOS**, designed for researchers to create LaTeX Beamer-like navigation and automate scientific data animations.
+A collection of VBA macros for Microsoft PowerPoint, designed for researchers to create LaTeX Beamer-like navigation and automate scientific data animations.
 
-本项目是一套专为 **MacOS 版 Microsoft PowerPoint** 设计的 VBA 宏工具，旨在为研究人员提供类 LaTeX Beamer 的导航体验，并自动化处理科学数据动画。
+本项目是一套专为 Microsoft PowerPoint 设计的 VBA 宏工具，旨在为研究人员提供类 LaTeX Beamer 的导航效果，并自动化处理科学数据动画。
 
 ---
 
